@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(()=>{
     const getuserdata = async()=>{
       try {
-        const response = await axios.get(`${window.location.origin}/api/${import.meta.env.VITE_USERDATA}`)
+        const response = await axios.get(`${window.location.origin}/api/getusers`)
         setUserdata(response.data.result)
         console.log(response.data.result.length)
       } catch (error) {
@@ -31,7 +31,7 @@ const Home = () => {
     e.preventDefault()
     if(e.target[3].value === 'Add User'){
       try {
-        const result = await axios.post(`${window.location.origin}/api/${import.meta.env.VITE_USERCREATE}`,{
+        const result = await axios.post(`${window.location.origin}/api/createuser`,{
           username,email,phone
         })
         if(result.data.success){
@@ -47,7 +47,7 @@ const Home = () => {
       }
     }else if(e.target[3].value === 'update'){
       try {
-        const result = await axios.put(`${window.location.origin}/api/${import.meta.env.VITE_UPDATEUSERS}/${userid}`,{
+        const result = await axios.put(`${window.location.origin}/api/updateuser/${userid}`,{
           username,email,phone
         })
         if(result.data.success){
@@ -70,7 +70,7 @@ const Home = () => {
     setFormButtonName('update')
     setFormVisibleStatus(!formvisiblestatus)
     try {
-      const response = await axios.get(`${window.location.origin}/api/${import.meta.env.VITE_GETSINGLEUSER}/${userId}`)
+      const response = await axios.get(`${window.location.origin}/api/getusersbyid/${userId}`)
       if(response.data.success){
         setUsername(response.data.result.username)
         setEmail(response.data.result.email)
@@ -84,7 +84,7 @@ const Home = () => {
   const handleDelete = async(e,userId)=>{
     e.preventDefault()
     try {
-      const response = await axios.delete(`${window.location.origin}/api/${import.meta.env.VITE_USERDELETE}/${userId}`)
+      const response = await axios.delete(`${window.location.origin}/api/deleteuser/${userId}`)
       if(response.data.success){
         console.log(response.data.message)
         setFormClickedStatus(!formclickedstatus)
